@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.io.InputStream"/>
+    <fullyQualifiedTypeName name="org.apache.ibatis.io.Resources"/>
+    <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSessionFactoryBuilder"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.member.model.dao.MemberDao"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.member.model.service.MemberServiceImpl"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.board.model.service.BoardServiceImpl"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.board.model.dao.BoardDao"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.common.template.Template"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.common.template.Pagination"/>
+    <fullyQualifiedTypeName name="org.apache.ibatis.session.RowBounds"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.board.model.vo.Board"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.board.model.vo.Reply"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.common.model.vo.PageInfo"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.board.model.service.BoardService"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSession"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.kh.mybatis.member.model.vo.Member"/>
+</qualifiedTypeNameHistroy>

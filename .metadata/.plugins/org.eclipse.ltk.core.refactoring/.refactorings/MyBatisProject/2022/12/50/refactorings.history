@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;errorPage.jsp&apos; to &apos;common&apos;" description="Move &apos;errorPage.jsp&apos; to &apos;common&apos;" destination="WebContent/views/common" element1="WebContent/errorPage.jsp" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1670226999149" updateReferences="true"/>
+</session>

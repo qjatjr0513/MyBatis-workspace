@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+
+	<resultMap id="boardResultSet" type="board">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="USER_ID" property="boardWriter" />
+		<result column="COUNT" property="count" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+	</resultMap>
+	
+	<resultMap id="boardResultSetType2" type="board">
+		<id column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="USER_ID" property="boardWriter" />
+		<result column="COUNT" property="count" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<!-- 댓글 목록 -->
+		<collection property="list" resultMap="replyResultSet"></collection>
+	</resultMap>
+	<!-- id와 result는 기능이 동일함 아무거나 써도 상관없음 -->
+	
+	<resultMap id="replyResultSet" type="reply">
+		<id     column="REPLY_NO" property="replyNo"/>
+		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REPLY_USER_ID" property="replyWriter"/>
+		<result column="REPLY_CREATE_DATE" property="createDate"/>
+	</resultMap>
+	
+	<resultMap id="replyResultSetType2" type="reply">
+		<id     column="REPLY_NO" property="replyNo"/>
+		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REPLY_CREATE_DATE" property="createDate"/>
+		<association property="member" javaType="member">
+			<id     column="USER_NO" property="userNo"/>
+	 		<result column="USER_ID" property="userId"/>
+		</association>
+	</resultMap>
+
+	<select id="selectListCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE STATUS = 'Y'
+	</select>
+
+	<select id="selectList" resultMap="boardResultSet">
+		SELECT
+		BOARD_NO,
+		BOARD_TITLE,
+		USER_ID,
+		COUNT,
+		CREATE_DATE
+		FROM BOARD B
+		JOIN MEMBER ON (BOARD_WRITER = USER_NO)
+		WHERE B.STATUS = 'Y'
+		ORDER BY BOARD_NO DESC
+	</select>
+
+	<select id="selectBoard" parameterType="string"
+		resultMap="boardResultSetType2">
+		SELECT
+		BOARD_NO,
+		BOARD_TITLE,
+		M.USER_ID,
+		COUNT,
+		B.CREATE_DATE,
+		BOARD_CONTENT,
+		REPLY_NO,
+		REPLY_CONTENT,
+		M2.USER_ID AS REPLY_USER_ID,
+		R.CREATE_DATE AS REPLY_CREATE_DATE
+		FROM BOARD B
+		JOIN MEMBER M ON (BOARD_WRITER = USER_NO)
+		LEFT JOIN REPLY R ON (BOARD_NO = REF_BNO)
+		LEFT JOIN MEMBER M2 ON (REPLY_WRITER = M2.USER_NO)
+		WHERE BOARD_NO = #{boardNo} AND B.STATUS='Y'
+	</select>
+	
+	<update id="increaseCount" parameterType="String">
+		UPDATE BOARD
+		   SET COUNT = COUNT + 1
+		WHERE BOARD_NO = #{boardNo}  
+	</update> 
+	
+	
+	
+	<select id="selectReplyList" parameterType="String" resultMap="replyResultSetType2">
+		SELECT REPLY_NO , REPLY_CONTENT, CREATE_DATE, USER_NO, USER_ID
+		FROM
+		REPLY R
+		JOIN MEMBER ON (R.REPLY_WRITER  = USER_NO)
+		WHERE R.REF_BNO = #{boardNo}
+	</select>
+
+	<select id="selectSearchCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD B
+		JOIN MEMBER ON (B.BOARD_WRITER = USER_NO)
+		WHERE B.STATUS = 'Y'
+		<if test="condition == 'writer'">
+			AND USER_ID
+		</if>
+		<if test="condition == 'title'">
+			AND BOARD_TITLE
+		</if>
+		<if test="condition == 'content'">
+			AND BOARD_CONTENT
+		</if>
+			LIKE '%' || #{keyword} ||'%'
+	</select>
+	
+	<select id="selectSearchList" parameterType="hashmap" resultMap = "boardResultSet">
+		SELECT 
+			BOARD_NO,
+			BOARD_TITLE,
+			USER_ID,
+			COUNT,
+			CREATE_DATE
+		FROM BOARD B
+		JOIN MEMBER ON (B.BOARD_WRITER = USER_NO)
+		WHERE B.STATUS = 'Y'
+		<if test="condition == 'writer'">
+			AND USER_ID
+		</if>
+		<if test="condition == 'title'">
+			AND BOARD_TITLE
+		</if>
+		<if test="condition == 'content'">
+			AND BOARD_CONTENT
+		</if>
+			LIKE '%' || #{keyword} ||'%'
+		ORDER BY BOARD_NO DESC
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
